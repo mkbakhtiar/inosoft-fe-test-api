@@ -18,8 +18,7 @@ class PipesController extends Controller
         Log::info('Pipes data loaded:', ['count' => count($this->pipesData['data'] ?? [])]);
     }
 
-    public function getFilters(Request $request)
-    {
+    public function getFilters(Request $request) {
         $selectedFilters = [
             'product_type' => $request->query('productType'),
             'grade' => $request->query('grade'),
@@ -50,10 +49,15 @@ class PipesController extends Controller
 
             if ($matchesAllFilters) {
                 $matchCount++;
+
                 foreach ($filters as $key => $value) {
-                    if (!in_array($item[$key], $filters[$key])) {
-                        $filters[$key][] = $item[$key];
+                    // Initialize the filter option count if not already set
+                    if (!isset($filters[$key][$item[$key]])) {
+                        $filters[$key][$item[$key]] = 0;
                     }
+
+                    // Increment the count for this filter option
+                    $filters[$key][$item[$key]]++;
                 }
             }
         }
@@ -62,8 +66,12 @@ class PipesController extends Controller
         Log::info('Matches found:', ['count' => $matchCount]);
         Log::info('Resulting filters:', $filters);
 
+        // Sort filters by key names (optional) and format to include name and count
         foreach ($filters as &$options) {
-            sort($options);
+            ksort($options); // Sort by key (filter value)
+            $options = collect($options)->map(function ($count, $name) {
+                return ['name' => (string)$name, 'count' => $count]; // Reformat with name and count
+            })->values()->toArray(); // Convert to array
         }
 
         return response()->json([
@@ -71,6 +79,7 @@ class PipesController extends Controller
             'selected' => $selectedFilters,
         ]);
     }
+
 
     public function search(Request $request)
     {
