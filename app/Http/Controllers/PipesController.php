@@ -21,7 +21,7 @@ class PipesController extends Controller
     public function getFilters(Request $request)
     {
         $selectedFilters = [
-            'product_type' => $request->query('product_type'),
+            'product_type' => $request->query('productType'),
             'grade' => $request->query('grade'),
             'connection' => $request->query('connection'),
             'size' => $request->query('size')
@@ -75,7 +75,7 @@ class PipesController extends Controller
     public function search(Request $request)
     {
         $filters = [
-            'product_type' => $request->query('product_type'),
+            'product_type' => $request->query('productType'),
             'grade' => $request->query('grade'),
             'connection' => $request->query('connection'),
             'size' => $request->query('size')
