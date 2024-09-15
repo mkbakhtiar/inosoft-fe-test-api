@@ -105,8 +105,6 @@ class PipesController extends Controller
         // Log the number of results
         Log::info('Search results count:', ['count' => $results->count()]);
 
-        return response()->json([
-            'results' => $results,
-        ]);
+        return response()->json($results);
     }
 }
