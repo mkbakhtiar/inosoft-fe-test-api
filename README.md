@@ -18,7 +18,7 @@ This Laravel API provides endpoints for fetching filter options and searching pr
 
 2. Navigate to the project directory:
    ```
-   cd your-repo-name
+   cd inosoft-fe-test-api
    ```
 
 3. Install the dependencies:
